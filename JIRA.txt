@@ -1,0 +1,26 @@
+JIRA:
+
+JIRA is project mgmt and issue tracking toolby Atlassian.
+
+mainly used for:
+- Agile development
+- Devops
+- IT Support
+- Bug tracking
+- Sprint mgmt
+- Change mgmt
+
+Epic -- Story -- Task/bug
+
+Project - colleaction of tasks/issues
+Board - Visual workflow tracking
+
+-- Example:  
+	Epic - Online Banking Application
+	Story - User should login using OTP
+	Task - Configuring monitoring dashboard
+	Bug - Payment page throws error 500
+	
+Jira Workflow: Open -> To DO -> In Progress -> Testing -> Done -> Completed
+
+Agile concepts: Backlog, Sprint planning, stroy points, burndown charts

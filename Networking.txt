@@ -1,0 +1,50 @@
+Networking:
+
+TCP/IP protocol : Transmission control protocol, Internet protocol (it is communication protocol suite used for networking and internet communication)
+
+lets assume like a courier service:
+
+TCP: Ensures data reaches correctly
+IP: Finds destination address and route
+
+Flow:
+	Client - SYN
+	Server - SYN-ACK
+	Client - ACK
+	*connection established
+	
+Common TCP/IP Protocols:
+
+	HTTP: Web communication - 80
+	HTTPS: Secure web communication -- 443
+	FTP: File transfer - 21
+	SSH: secure shell/ secure remote login - 22
+	DNS : Name resolution -53
+	DHCP: IP address assignment
+	SMTP: Email sending - 25
+	
+IP Address types:
+
+	IPV4: 32 bit address (192.168.1.1)
+	IPv6: 128 bit address (2001:db8::1)
+	
+Subnetting: subnetting divides a network in to smaller networks.
+
+ipconfig
+ifconfig
+check open ports: netstat -tulnp
+DNS lookup: nslookup google.com
+traceroute google.com
+
+TCP: Reliable, Slower, connection-oriented
+UDP: Unreliable, faster, connectionless
+
+-- Socket : Is combination of ipaddress and port number.
+
+--NAT : Network Address Translation - convers privates IP's to Public IP's
+
+-- Unable to access website, troublw shoot -- Internet connectivity, DNS resolution, Ping server, port accessibility, Firewall rules, Routing
+
+-- Ping works but website not opening -- Web server down, Port 80/443 blocked, DNS issue, Application failure
+
+-- SSH connection timedout -- Server unreachable, port 22 blocked, Firewall issue, SSH service down

@@ -1,0 +1,101 @@
+Splunk:
+
+is a log mgmt tool to serach errors and monitorinh, visuallization.
+Main componnets:
+
+Forwarders: send data to indexer  -- UF universal forwarders and Heavy forwarders
+Indexers: storage location for data in splunk - eg: index=main
+Search Head: provides UI for searching and reporting
+
+SPL: search processing language. -- cmd's : search, stats, table, eval, rex, top, timechart
+
+host - server - where data comes from
+source - file path/log name
+source type - format of data
+Data is all around the world -- business, governament, organizations
+
+these will generate lot of un structured data, if we have to debug any issues need to 100's of logs, so splunk simplifies this, machine learning feeding data to spulnk.
+
+-- In home web page use search and reporting, try below
+
+created 1 dash board with 2 panels: ssl handshake error and comparision stats
+
+index="_internal" "attr.error.codeName"=SSLHandshakeFailed | stats count
+
+index="_internal" | stats count by status
+
+-------------------
+
+Splunk Data pipeline:
+
+input -- parsing -- indexing -- searching
+
+splunk cloud platform & splunk enterprise
+splunk adds default fileds to all events
+
+_time
+index
+host
+source
+sourcetype
+
+there are 2 verions in splink serach - SPL and SPL2 (it is looks like SQL search)
+
+2 type searches::
+Raw event serached  -- from large sets like main -- index=main
+Transforming searches -- giving pipes to 1st serach and so on . -- index=main | stats count by status
+
+5 types of search commands
+Generating -- search, from, union
+streaming -- eval
+Transforming -- stats, timechart, top
+Other -- Orchestrating, Data streaming
+
+
+
+all search cmd's starts with generative cmd 
+
+dedup - removes duplicates, table - builds a table with specified fields
+
+after adding the sample file and clicking on search and report - will get default query like below
+
+defaults fields in splunk are - index, host, source, sourcetype
+search modes - smart(default), fast(no filed discovery), verbose (max filed discovery)
+
+source="web.txt" host="fake_host" index="main" sourcetype="fake_sample_1"
+source="web.txt" host="fake_host" index="main" sourcetype="fake_sample_1" "action=" Submit
+source="web.txt" host="fake_host" index="main" sourcetype="fake_sample_1"  (action="Submit" OR action="Apply Coupon")
+source="web.txt" host="fake_host" index="main" sourcetype="fake_sample_1"  (action="Submit" OR action="Apply Coupon") | table _time action
+source="web.txt" host="fake_host" index="main" sourcetype="fake_sample_1"  (action="Submit" OR action="Apply Coupon") | stats count by action
+source="call_center.txt" host="fake_sample_call" index="main" sourcetype="fake_sample_call" | top 5 agent_id
+source="call_center.txt" host="fake_sample_call" index="main" sourcetype="fake_sample_call" | top 5 agent_id | stats count by agent_id
+source="call_center.txt" host="fake_sample_call" index="main" sourcetype="fake_sample_call" agent_id | stats count
+source="call_center.txt" host="fake_sample_call" index="main" sourcetype="fake_sample_call" agent_id
+index=main | timechart count
+index="_audit" | timechart count  -- time based error
+index=main | eval status=if(agent_id==9,"success","Failure")  -- here eval is creating a new filed based on if condition logic.
+
+index=main | eval status=if(agent_id==9,"success","Failure")| search status=success  -- if you click manually on any field in UI then it updates ur query also in search bar.
+
+index=main | eval status=if(agent_id==9,"success","Failure")| stats count by status -- it will check the count for success and failure status.
+
+index=main | table agent_id  -- comes data in table form
+index=main agent_id | stats count by agent_id  -- this will count the entries for each agent id below also working
+index=main | stats count by agent_id
+
+we can extract new fileds apart from which are created by default, using reg expr
+
+evry search is an event in the splunk, we created below event typw  and saved it.
+
+source="call_center.txt" host="fake_sample_call" index="main" sourcetype="fake_sample_call" "agent_id=1"  -- named agent_id_97_event
+then we can directly do search with this -- eventtype="agent_id_97_event" in search bar
+
+** did not understand looks up in splunk ** and alias and Data model
+
+created a tag, which is bit similar to event creation. (count same for below 2)
+tag::queue="tag_disconnect"
+source="call_center.txt" host="fake_sample_call" index="main" sourcetype="fake_sample_call" "queue=" Call Disconnected
+
+
+Data models are collection of data sets
+

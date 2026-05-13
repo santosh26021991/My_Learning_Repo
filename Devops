@@ -1,0 +1,26 @@
+DEVOPS:
+SDLC followed
+
+waterfall
+Agile (2-4 weeks all sdlc steps so on and so forth)
+Spiral
+Big bang
+etc...
+
+Dev is Agile (regular changes) and ops is ITIL (stable env for product)
+Dev is agile but ops is still waterfall
+here DEVOPS comes (no human intervention and no humna error), dev knows little about ops and ops knows little about agile.
+
+== Continuos integration
+
+After developers works on the code, they will push it to git repo, once they pushed build server like jenkins/git immediately takes this code and compiles it like (java --> .class & c++ --> executables) after this it will create a .jar file/.exe or Docker image. this is done by using Maven/Gradle/ANt (build tools) file.
+
+CI goal is to detect issue at early face. so that it does not multiply.
+
+Developers code, automatically build and tested after they commit the code. If this went fine then Artifact/software gets stored in reposities in the form of docker image.
+
+== Continuos Delivery
+
+Ansible, puppet, chef for system automation
+jenkins, octopus for ci/cd automation
+terraform/ cloud formation  for cloud deploymnt automation

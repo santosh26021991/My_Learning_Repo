@@ -1,0 +1,84 @@
+Terraform, Ansible, Dynatrace:
+
+These tools are commonly used to Devops automation pipeline. but each has a different repository.
+
+Terraform - create infrastructure automatically  -- It is managing infrastructure through code instead manually
+Ansible - Configures servers/applications
+Dynatrace - Monitors infrastructure and applications.
+
+
+--nginx -- A high-perfomance web servver and reverse proxy server (a server that forwards client request to backend servers).
+
+--what terraform creates -- AWS EC2 instances, VPC's, kubernetes clusters, Load balancers, Databases
+eg: create 3 EC2 servers automatically
+
+--what Ansible Does -- it does configuration after terraform creates it, install java, configure Nginx, deploy application, create users, update packages
+eg: Install Docker on all servers
+
+--Dynatrace - Monitoring & Observability -- it monitors severs, Applications, kubernetes, network, logs, user experience
+it detects cpu spikes, memory issues, slow api's, application crashes
+
+**Simple real-time flow:
+--
+Developer pushes code
+CI/CD pipeline starts
+Terraform provisions Infra
+Ansible configures servers
+Applications deployed
+Dynatrace monitors the health
+--
+
+Project structure:
+terraform-project/
+ |-main.tf
+ |-variables.tf
+ |-outputs.tf
+ |-terraform.tfvars
+ 
+terraform commands:
+	terraform init -- initialize terraform : downloads provider plugins
+	terraform validate -- valiidate syntax
+	terraform plan -- preview changes : shows what terraform will create
+	terraform apply -- create infrastructure
+	terraform destroy -- Destroy infrastructure
+	
+-- what happens internally : Terraform code - Terraform provider - AWS API calls - Infrastructure created
+
+Key terraform concepts:
+	provider - cloud platform plugins
+	resource - infrastructure pbject
+	state file - tracks infrastructure
+	variables - reusable values
+	output - displays useful info
+	
+what is terraform.tfstate -- it stores current infrastructure details (created resources, current infrastructure state, Dependecies)
+what is terraform.tfstate file deleted - terraform loases tracking of managed infrastructure.
+
+what is provider in terraform? -- plugin used to interact with cloud/service API's.
+eg: AWS, Azure, GCP
+
+what is terraform plan -- preview of infrastructure changes before applying.
+
+***EG: Write a infrastructure code***
+
+resource "aws_instance" "app_server" {
+	count	=5
+	ami 	= "ami_xxxx"
+	instance_type = "t2.micro"
+	}
+
+--> Here count is 5 means, create 5 servers automatically.
+run terraform init - terraform init
+run terraform plan - terraform plan
+	create 5 EC2 instances
+run apply changes - terraform apply
+
+Real Benefit:
+Lets say tomorrow you need 10 more servers again - so to overcome this manual task can use terraform
+just the value changes for a variable
+count = 10
+terraform apply
+
+If we want to maintain consistent infra across diff env (DEV/UAT/PROD) - terraform can be used.
+
+it is speed, no manual work, no human errors, consistency, infra stored in git version control, easy expansion, easy creation.

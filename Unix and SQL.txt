@@ -1,0 +1,39 @@
+Unix and SQL
+
+Curl - is mainly used to check applicatio/service is working. to test API's
+troubleshoot network/application issues.
+validate server responce
+
+eg: curl http://app-serevr:8080
+
+we can run above cmd on unix terminal, power shell, mac os, inside docker container, inside kubernetes pod
+
+curl http://app-serevr:8080/health -- o/p:  {"status":"up"}
+
+Crontab:
+M H D M D
+
+0 2 * * * /home/test.sh -- run everyday at 2am
+*/5 * * * *  -- run for every 5 mins
+0 6 * * 0 -- run every sunday at 6am
+
+crontab -r - to remove crontab
+
+**Stored procedure: is set of sql statements
+
+create or replace procedure Transfer_money(
+	IN from_acc INT,
+	IN to_acc INT,
+	IN amount INT)
+	
+	BEGIN
+		UPDATE accounts set balance = balance - amount where acc_no = from_acc;
+		UPDATE accounts set balance = balance + amount where acc_no = to_acc;
+		INSERT into transactions values (from_acc, to_acc, amount);
+	END;
+
+**Functions
+
+create function Getbonus(salaty INT)
+RETURNS salary * 0.10;
+RETURNS salary * 0.10;

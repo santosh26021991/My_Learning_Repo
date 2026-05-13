@@ -1,0 +1,6 @@
+AI:
+
+generative AI -- generating informatin give 
+Agentic AI  -- doing actual task on behalf a person
+
+LLM - Large language models

@@ -1,0 +1,528 @@
+AWS:
+
+usernamr: santosh_cg
+
+
+.amazon.com  -- create aws account
+
+client -- Router -- switch -- c1, c2, c3
+
+
+cloud computing -- fully on-demand
+private cloud -- rackspace
+public cloud -- aws, gcp, azure
+hybrid cloud -- aws
+
+Iaas
+Paas
+Saas
+
+Region contains isolated availability zones, availability zones contain data centers.
+A region is a cluster of data centers
+
+route53 service  -- global region
+
+in-bound rules -- security group -- outbound rules
+
+ssh 22
+ftp 21
+sftp 22
+http 80
+https 443
+RDP 3389
+
+from putty-gen we can convert .ppm file to .ppk file 
+
+after stop , start ec2 instance public IP will change but private IP remains same.
+ec2-user@public-IP
+
+-------------
+
+IAM  -- Identity and access management
+created iam user and create custom passwd
+
+MFA -- google authenticator
+
+create access keys to access from console. from gui
+
+aws configure
+aws iam list-users
+
+cloud shell icon in banner top
+
+we can download IAM credentials report
+
+---------------------
+
+EBS volume is netwotk storage not physical storage
+
+1 EBS volume can not be attached to 2 instances at a time. but one ec2 instace can have 2 EBS volumes.
+
+create snapshots for volumes, so it is type of backup.
+
+these snapshots can be used to create AMI at the time of launching new ec2 instances.
+
+----------------------------
+
+Elastic load balancing
+
+veritical  -- junitor operator and to senior operator -- t2.micro to t2.large verycommon -- incresing database size
+horizontal scalability -- incresing number of instances -- junior operator adding few more operators
+
+
+create 2 ec2 instance -- create load balance (create a group and add these 2 instances to that grp)  -- and then directly use the dns name search in url, if u keep refresh it will chage the IP.
+
+Auto scaling group -- inrcresing no.of ec2 instances  -- load balancer will automatically register these new instances for scaling
+for asg need to create template 1st it is similar creating an ec2 instance
+
+manual scaling , dynamic scaling, predictive scaling
+
+----------------------
+
+S3 bucket:
+
+create objects under bucket
+block all public acces initially, u can unblock and need to add policy to make view by public
+
+from properties tab we can add the website link with default page, add index.html file, then it will load.
+
+we can add the versioning, if we update the file or delete the files it can the verions and we can restore it when we want.
+
+S3 replication: CRR - cross regional replication, srr - same regional replication
+
+for replication, need to create the replication rule from management tab and need to mention the target bucket name.
+
+server side encyption is , a user uploads object to s3 bucket then that object gets encypted on s3 bucket by default, this is always on on.
+client side encryption, a user encrypt the file before uploading the file to s3 bucket.
+
+snowball is used for data migration.
+Hybrid -- means on-premise and clousd storage, some of the organization have like this.
+
+---------------------------
+
+Datbase and Analytics
+famous one is - relationsl databse - like excel
+
+RDS  -- oracle, postgree sql, my sql, sql, sybase
+Aurora -- 5x postgree sql, 3x my sql , bit code than rds but it is very efficient
+
+Read replicals in DB are used to scale up the read.  -- here replication cost is associated.
+Dynamo db is -- no sql and server less  -- it contains table/tables , we can not link one table with another table like we did in RDS.(emp - dep)
+Quick sight -- user for visualization purpose
+document db is same as mongo db -- no sql db
+Neptune - is graph type of database -- like social media all likes shares and comments
+
+AWS Glue: does ETL , gets dats from s3 and rds and runs script to send data to redshift database to do analytics.
+
+DMS -- database migration service -- it takes data from source database then connect to ec2 instance after that loads data into target database. (on-premise to cloud)
+
+Quicksight -- for dashboards
+
+
+-------------------------------------
+
+ECS
+Docker is a container - holds multiple pkg's in it, so it is very compattible and easy install on any OS/device.
+
+ECS: Elastic container service(uses EC2 serves). and fargate(server less)
+EKS - elastic kubernities service
+
+Lambda : pay per calls, 1st 1 million calls are for free, it is server less and cost effective, supports many languages.
+basic funcrion created -- hello world.
+Lamda create thubnails to the objects uploaded in S3
+Light Sail: is lighter version of AWS, we can create ec2 instance just with few clicks not much configuration is required.
+If a person wnats to build an application with predictable pricing, Ligh sail is the best option.
+
+--------------------------------
+
+Cloud formation -- created ec2, s3 etc.. for you, no need to create resources manually. cost advantage.generates diagram. very productive, can use existing templates.IaaS, diff region also support
+CDK - cloud development kit - it will complime eck and other things
+Elastic beanstalk -- developers use this to deploy application on aws. - developer centric view. -- its PaaS bcoz we jusy worry about the code, health agents are present on bean stalk to check metrics.
+bean stalk vs cloud formation
+aws code deploy - does not require cloud formation and beanstalk , it updates versions from like v1 to v2, from on-premise to aws also.
+aws code commit - uses GIT versions control
+aws code build - it allows to build your code in the cloud - complies code , tests and produce packages, after code commit it runs
+code pipeline : it will orchestrate things to push code to production (code - build - test - provision - deploy)
+code artifacte: it is secure , scalable thing for software development. cost effective. - to maintaine code dependecies by developer
+SSM - AWS system manager - help to manage ec2 and on-premise system at scale. hence it is called hybrid service. can do automation patching with the use of this. need to install ssm agent 1st to use this.- 
+ssm session manager service: we can use secure shell using this without security keys.
+system manager parameter store: use to store configurations and securities api keys, passwds - it is a simple service.
+cloud formation and elastic beanstalk - both are free to use.
+
+
+--------------------------
+
+Global Application
+Route53 is a managed dns -- from web browser if u eneter www.abc.com it goes to route 53 and gets the ip address to connect to the respective website.
+to create a dns domain it will cost money, so we did not create it
+normally aftre creating domain, need to create 2 records which are normally 2 ec2 instances. after this if you enter dns name then it will navigate to record/ec2 instance which is closest to it. If u have virtual vpn then u can choose other region and test it so it will route to other record/ec2 instance.
+
+Cloud front uses global edge network, data is cached in edge networks, there are many edge networks on globe.
+
+by using cloud front we can access the S3 objects using http links without giving the permissions in s3 bucket policy. while creating cloud front we have to choose the bucket so it will add cloud the cloud front policy in s3 bucket permissions with the use of cloud front service while deploying.
+
+s3 buckets are linked to only 1 region.
+
+AUS -- edge location(object transfer) -- USA  --> so here edge location used for fastre transfer 
+
+Outposts are used for providing outposts racks, when any company has on-premise servers or hybrid servers, if they want to use aws services for on-premise also then they can use outposts racks. but here company has to take responsibility of racks hardware not aws.
+wavelength service for mobile for ultra low latency, 
+local nodes for better latency if required for users.
+
+-----------------------
+
+Cloud integration:
+
+SQS simple queue service :: fifo-- you create a queue and add send messages, at reciver you have to poll message so then messages can comes at receiver side. It holds messages up to 14 days in queue and then deleted.
+
+SNS simple notification service-- 1 meesage to many receivers  -- create a subscription in that use a protocol (http, email etc..) then publich the messaged. SNS can not retain any messages.
+
+Kinesis is for real time data streaming, persistence and analysis. managed message broker.
+
+sqs, sns are cloud native services.
+
+mq with on-premise (Rabbit mq, Active MQ)
+
+--------------------------
+
+Cloud Monitoring:
+
+cloud watch provides metrics for all aws services. (monitoring memory, cpu etc...)
+cloud watch logs -- to view the logs for services -- eg lamdba function is running and we can see the basic hello world logs.
+
+Event bridge -- for example if any user logged in with root user, it should sent an ebent notification using SNS topic.
+Cloud trial (audit)-- holds the history of all the services like who did what on which service , it holds all the logs.
+If some one has deleted something, need find the details means we should use cloud trial. it checks for all the API calls.
+
+X-Ray -- used to see the services status in picture format, if any service not working , engineers will check this issue with x-ray and checks the logs. -- users can debug production issues also.
+
+code guru will reviews the code by user which deployed, if any loop holes then it identities highlights it.
+
+AWS health dashboard -- we can see health of all the services like today, yesterday, day before yesterday .. how it was.
+
+----------------------------
+
+VPC & Networking
+
+IPV4 -- 4.3 billion there, after every restart of ec2 instance public ip will change.
+elastic ip use to maintain same ipv4 address for ec2 instance.
+VPC -- virtual private cloud , contains subnets (public and private)
+CIDER -- is something like 172.31.0.4/21  (looks like IP address)
+NACL - Network access control list is a firewaal at subnet level protects ec2 instance. it has both allow and deny rules.
+vpc flow logs -- contains log info like, subnect not connect to internet viceversa, subnet not connect to subnet
+vpc peering - vpc-A to vpc-B
+AWS private link -- falls between 2 vpc's (your vpc and 3rd party vpc) for secure connection, here vpc peering we can not use as other vpc is 3rd party one.
+site to site vpn and Direct connect(this is fast) -- are used for on-primise DC connect with aws VPC.
+to connect 100's of vpc's together and on-premise also -- need to use transit gateway
+Internet gateway -- to have connect between vpc and internet.
+
+----------------------
+
+Security and Compliance
+
+shared responsibility -- aws and user
+DDos attack -- hacker makes multiple connection to aws console so normal users can not make a connection to aws gets it is not accesible.
+aws shield we have to use for this. (standard and advanced shield)
+aws waf - web application firewall
+penetration testing - trying to attck our own infra to check the security level status.
+data at rest -- means data archived on harddrive/rds/db etc..  , data in transir -- data is moving like uploading to s3 etc...
+kms, cloud hsm -- encryption things
+ACM - amazon certificate manager - support both public and tsl private certs.
+secrest manager -- rotates the password - for eg change passwd of user for every 90 days
+aws arficats service - used to download compliance reports/docs
+Guard duty -- looks for threats , monitors clous trial logs etc.. saves from crypto currency attacks
+Amazon inspector - does assesment for aws service to check any threats.  -- this is automated in aws by default.
+Maice -- alerts you on sensitive data - PII classified
+securitu hub - contains all protection together cloud trial, inspector etc...
+Aws abuse - if you fell any IP is not cottecting and not behaving protpely like sending some irrellavent email/abuse then u can report to aws there is a mail id abuse@amazonaws.com
+
+---------------------------
+
+Machine learning:
+
+Amazon rekognition -- face detection , learning pictures
+transcrive overview -- speech recognization  -- speech to text
+comprehend - natural language processing
+amazon polly - turns text in to audio.
+translate -- will translate text language from one to other language
+sage maker - delas with MLmodels  -- it is quick to make things.
+amazon kendra - ml service - it is used for searching - document search
+amazon textract -- extratcs text from pdf's and images, passport other docs
+Lex - is used for chatbots
+
+-------------------------
+
+Advanced identity:
+
+AWS STS - security toekn service -provides temporary creds
+cognito - millions of users iam roles here -- fackbook, gmail... creating db for mobile and web apps
+Active dir - manage many users, computer, printers ....
+Aws iam identity center - 1 account then 4 account login access.
+-----------------
+
+Other services:
+
+Daas: Desktop as a service - users can choose the desktop windows/ linux in vdi.
+Appstream - it is web application, no need to connect to VDI.
+IOT core - internet of things - things are connected here  -- serverless service , lets u connect to billions of devices.
+Appsync - for syncronising at real time mobile and web apps.
+Amplify - use to develop full stack mobile and web applications.
+aws infrastructure composer -- drag and drop options are there.
+Device farm -- mobile, tablet, desktop
+aws backup - on-demand and scheduled backup available
+DRS - elastic disaster recovery
+cloud migration strategies -- lift and shift 
+(application migration service)
+FIS - fault injection simulator - run fault injection on aws workloads
+setp functions - is like graph , on success or failure where it should goes - sequencing, error handling, lambda functions
+ground station - to take care of satellite operations, it downloads data to s3 bucket from satellite
+amazon pinpoint - inbound/outbound marketing communication service. pinpoint and SNS are similar.
+
+-------------------
+
+AWS organization:
+allows to manage multiple aws accounts - api available to create automate account creation.
+scp - service control policies - blacklist and whilelist strategies to use the service accounts
+nested accounts and organizarion are created hhere under root. after this create the policies or inherit policy from root user.
+aws organization - consolidated billing - if we purchase more like more amount of data then gets discount.
+shared volume pricing discounts.
+aws ram - resource access manager service 
+aws service catalog:  admins will create products in it, here portfolio is collection of products, eg with out creating rds we can use it, facility is there
+aws pricing models - 4 types - pay as you go is 1 type
+free account there for 6 months
+
+
+--------------------
+
+Aws architecting and eco system:
+
+
+
+=========================
+
+ You can contact AWS support to increase the service limits.
+ You can use the AWS Trusted Advisor to monitor your service limits.
+ What is the AWS data warehouse service that supports a high level of query performance on large amounts of datasets? -- Amazon Redshift.
+EC2 instances will be billed on one second increments, with a minimum of one minute.
+AWS allows you to provision resources in minutes. -- this is aws cloud agility
+Which AWS service provides cost-optimization recommendations? -- AWS Trusted Advisor.
+A company has hundreds of VPCs in multiple AWS Regions worldwide. What service does AWS offer to simplify the connection management among the VPCs? -- AWS Transit Gateway.
+
+AWS Web Application Firewall (WAF) offers protection from common web exploits at which layer? -- Layer 7
+
+Which AWS Support plan provides architectural guidance contextual to your specific use-cases? -- AWS Business 
+
+Which AWS services can be used to decouple components of a microservices based application on AWS Cloud? (Select two) -- SQS, SNS
+
+A company wants to have control over creating and using its own keys for encryption on AWS services. Which of the following can be used for this use-case? -- customer managed key (CMK)
+
+A startup wants to provision an EC2 instance for the lowest possible cost for a long-term duration but needs to make sure that the instance would never be interrupted. As a Cloud Practitioner, which of the following options would you recommend? -- EC2 Reserved Instance (RI)
+
+A company wants to identify the optimal AWS resource configuration for its workloads so that the company can reduce costs and increase workload performance. Which of the following services can be used to meet this requirement?  -- AWS Compute Optimizer
+
+Which of the following is a recommended way to provide programmatic access to AWS resources? -- Use Access Key ID and Secret Access Key to access AWS resources programmatically
+
+A company uses reserved EC2 instances across multiple units with each unit having its own AWS account. However, some of the units under-utilize their reserved instances while other units need more reserved instances. As a Cloud Practitioner, which of the following would you recommend as the most cost-optimal solution? -- Use AWS Organizations to manage AWS accounts of all units and then share the reserved EC2 instances amongst all units
+
+Which tool/service will help you access AWS services using programming language-specific APIs? -- AWS Software Developer Kit (SDK)
+
+Which of the following AWS services support VPC Gateway Endpoint for a private connection from a VPC? (Select two)  -- Amazon Simple Storage Service (Amazon S3), Amazon DynamoDB
+
+Which security service of AWS is enabled for all AWS customers, by default, at no additional cost? -- AWS Shield Standard
+
+A big data analytics company is moving its IT infrastructure from an on-premises data center to AWS Cloud. The company has some server-bound software licenses that it wants to use on AWS. As a Cloud Practitioner, which of the following EC2 instance types would you recommend to the company? -- Dedicated Host
+
+A data analytics company is running a proprietary batch analytics application on AWS and wants to use a storage service which would be accessed by hundreds of EC2 instances simultaneously to append data to existing files. As a Cloud Practitioner, which AWS service would you suggest for this use-case?  -- Amazon Elastic File System (Amazon EFS)
+
+Which of the following Amazon S3 storage classes takes the most time to retrieve data (also known as first byte latency)? -- Amazon S3 Glacier Deep Archive
+
+AWS Shield Advanced provides expanded DDoS attack protection for web applications running on which of the following resources? (Select two) -- AWS Global Accelerator, Amazon Route 53
+
+The DevOps team at an IT company is moving 500 GB of data from an EC2 instance to an S3 bucket in the same region. Which of the following scenario captures the correct charges for this data transfer? -- The company would not be charged for this data transfer
+
+A multi-national company has just moved its infrastructure from its on-premises data center to AWS Cloud. As part of the shared responsibility model, AWS is responsible for which of the following? -- Physical and Environmental controls
+
+A startup wants to set up its IT infrastructure on AWS Cloud. The CTO would like to get an estimate of the monthly AWS bill based on the AWS services that the startup wants to use. As a Cloud Practitioner, which AWS service would you suggest for this use-case?  -- AWS Pricing Calculator
+
+Which of the following are correct statements regarding the AWS Global Infrastructure? (Select two)  -- 
+Each Availability Zone (AZ) consists of one or more discrete data centers, Each AWS Region consists of a minimum of three Availability Zones (AZ)
+
+Compared to the on-demand instance prices, what is the highest possible discount offered for spot instances? -- 90
+
+A company needs a storage solution for a project wherein the data is accessed less frequently but needs rapid access when required. Which S3 storage class is the MOST cost-effective for the given use-case?  -- Amazon S3 Standard-Infrequent Access (S3 Standard-IA)
+
+Which of the following AWS services can be used to connect a company's on-premises environment to a VPC without using the public internet? -- AWS Direct Connect
+
+An intern at an IT company provisioned a Linux based On-demand EC2 instance with per-second billing but terminated it within 30 seconds as he wanted to provision another instance type. What is the duration for which the instance would be charged? -- 60 seconds
+
+Which AWS service will help you receive alerts when the reservation utilization falls below the defined threshold? -- AWS Budgets
+
+Which of the following AWS services has encryption enabled by default? -- AWS CloudTrail Logs
+
+Athena is use to run SQL on S3 with minimum effort.
+
+--------------
+
+aws kendra -- for searching
+aws Lex -- chatbots, voice bots eg: alexa
+aws comprehend -- NLP/text analysis
+personalize -- recommnedations engineers
+
+
+regional in scope services -- Lambda, Rekognition, EC2, S3 buckets
+Global services -- IAM, Cloud front, Route 53
+Automatic encyption -- S3, Storage Gateway
+Optional/Manual Encryption: Redshift, EBS, EFS
+
+
+An IT company has a hybrid cloud architecture and it wants to centralize the server logs for its Amazon Elastic Compute Cloud (Amazon EC2) instances and on-premises servers. Which of the following is the MOST effective for this use-case?  -- Use Amazon CloudWatch Logs for both the Amazon Elastic Compute Cloud (Amazon EC2) instance and the on-premises servers
+
+Huge data analytics -- Amazon Redshift
+
+
+AWS CUR (cost and usage report)-- detailed billing reports in s3
+AWS cost explorer -- visual graphs / charts for cost analysis
+AWS budgets -- alerts when spendeing exceeds limits
+AWS pricing calculator -- Estimates future AWS costs
+
+instance store -- temporary high speed cache , it is attached ec2 instance 
+
+
+Which budget types can be created under AWS Budgets (Select three)? -- Cost budget, Usage budget, Reservation budget
+
+AWS Organization -- for consolidated billing, centralized mgmt, policy mgmt
+
+
+Which of the following are components of an AWS Site-to-Site VPN? (Select two) -- Customer gateway, Virtual private gateway (VGW)
+
+An IT company would like to move its IT resources (including any data and applications) from an AWS Region in the US to another AWS Region in Europe. Which of the following represents the correct solution for this use-case? -- The company should just start creating new resources in the destination AWS Region and then migrate the relevant data and applications into this new AWS Region
+
+AWS pricing calculator -- estimates future AWS cost, compare on-prem vs AWS, migration planning
+
+Reserved Instance (RI) pricing is available for which of the following AWS services? (Select two) -- Amazon Elastic Compute Cloud (Amazon EC2), Amazon Relational Database Service (Amazon RDS)
+
+AWS support levels : Basic, Developer, Business, Enterprise (programatice access, support API & automation of support cases means Business + Enterprise)
+
+Which of the following is available across all AWS Support plans? -- AWS Health Dashboard – Your account health
+
+
+Which of the following types are free under the Amazon Simple Storage Service (Amazon S3) pricing model? (Select two) -- Data transferred in from the internet, Data transferred out to an Amazon Elastic Compute Cloud (Amazon EC2) instance, when the instance is in the same AWS Region as the S3 bucket
+
+AWS Organizations provides which of the following benefits? (Select two) -- Share the reserved Amazon EC2 instances amongst the member AWS accounts, Volume discounts for Amazon EC2 and Amazon S3 aggregated across the member AWS accounts
+
+An e-commerce company would like to receive alerts when the Amazon EC2 Reserved Instances (RI) utilization drops below a certain threshold. Which AWS service can be used to address this use-case? -- AWS Systems Manager
+
+Which of the following is the best practice for application architecture on AWS Cloud? -- Build loosely coupled components
+
+Connecting on-premise to vpc -- AWS Direct connect and AWS Transit Gateway (if many vpc's are there), if less vpc's there then vpc peering works.
+
+Which of the following AWS storage services can be directly used with on-premises systems? -- Amazon Elastic File System (Amazon EFS)
+
+Which of the following entities are part of an Amazon Virtual Private Cloud (Amazon VPC) in the AWS Cloud? (Select two) -- Internet Gateway, Subnet
+
+An organization maintains a separate Virtual Private Cloud (VPC) for each of its business units. Two units need to privately share data. Which is the most optimal way of privately sharing data between the two VPCs? -- VPC peering connection
+
+Which of the following is a perspective of the AWS Cloud Adoption Framework (AWS CAF)? -- Business
+
+Which AWS entity enables you to privately connect your Amazon Virtual Private Cloud (Amazon VPC) to an Amazon Simple Queue Service (Amazon SQS) queue? -- VPC Interface Endpoint
+
+Gateway Endpoint : S3, DynamoDB
+Interface Endpoint: SQS, SNS, EC2 API etc..
+
+AWS Trusted Advisor can provide alerts on which of the following common security misconfigurations? (Select two)? -- When you don't turn on user activity logging (AWS CloudTrail), When you allow public access to Amazon S3 buckets
+
+Responsibilities : Guest os patching -- customer, network patching -- AWS
+
+Which of the following AWS authentication mechanisms supports an AWS Multi-Factor Authentication (AWS MFA) device that you can plug into a USB port on your computer? -- U2F security key (Universal 2nd Factor)
+
+The QA team at a company wants a tool/service that can provide access to different mobile devices with variations in firmware and Operating System versions. -- AWS Device Farm
+
+Which Amazon Route 53 routing policy would you use to route traffic to a single resource such as a web server for your website? -- Simple 
+
+Which of the following can you use to run a bootstrap script while launching an Amazon Elastic Compute Cloud (Amazon EC2) instance? -- Amazon EC2 instance user data
+
+NACL (Network access control list): security layer for subnet
+Security group - works at instance levelNetwork ACL : works at Subnet level.
+
+
+A social media analytics company wants to migrate to a serverless stack on AWS. Which of the following scenarios can be handled by AWS Lambda? (Select two) -- AWS Lambda can be used for preprocessing of data before it is stored in Amazon S3 buckets, AWS Lambda can be used to execute code in response to events such as updates to DynamoDB tables
+
+The DevOps team at an IT company wants to centrally manage its servers on AWS Cloud as well as on-premise data center so that it can collect software inventory, run commands, configure and patch servers at scale. As a Cloud Practitioner, which AWS service would you recommend for this use-case? -- AWS Systems Manager
+
+Which of the following is correct regarding the Amazon Relational Database Service (Amazon RDS) service? -- You can use both read replicas and multi-AZ deployment for disaster recovery
+
+Which of the following statements are CORRECT regarding AWS Global Accelerator? (Select two) -- AWS Global Accelerator provides static IP addresses that act as a fixed entry point to your applications, AWS Global Accelerator is a good fit for non-HTTP use cases
+
+Which of the following is best-suited for load-balancing HTTP and HTTPS traffic? -- Application Load Balancer
+
+Which of the following Amazon Simple Storage Service (Amazon S3) storage classes do not charge any data retrieval fee? (Select two) -- Amazon S3 Intelligent-Tiering, Amazon S3 Standard
+
+Which AWS service would you choose for a data processing project that needs a schemaless database? -- Amazon DynamoDB
+
+Which of the following Amazon Simple Storage Service (Amazon S3) storage classes has NO constraint of a minimum storage duration charge for objects? -- Amazon S3 Standard
+
+AWS Identity and Access Management (AWS IAM) is a global service
+
+An organization would like to copy data across different Availability Zones (AZs) using Amazon EBS snapshots. Where are Amazon EBS snapshots stored in the AWS Cloud? -- Amazon Simple Storage Service (Amazon S3)
+
+Which AWS serverless service allows you to prepare data for analytics?  -- AWS Glue
+
+A company using a hybrid cloud would like to store secondary backup copies of the on-premises data. Which Amazon S3 Storage Class would you use for a cost-optimal yet rapid access solution? -- Amazon S3 One Zone-Infrequent Access (S3 One Zone-IA)
+
+A company would like to separate cost for AWS services by the department for cost allocation. Which of the following is the simplest way to achieve this task? -- Create tags for each department
+
+Which security control tool can be used to deny traffic from a specific IP address? -- Network Access Control List (network ACL)
+
+A company needs to use a secure online data transfer tool/service that can automate the ongoing transfers from on-premises systems into AWS while providing support for incremental data backups.Which AWS tool/service is an optimal fit for this requirement? -- AWS DataSync
+
+Which of the following statements is CORRECT regarding the scope of an Amazon Virtual Private Cloud (VPC)? -- A VPC spans all Availability Zones (AZs) within an AWS region
+
+According to the AWS Well-Architected Framework, which of the following statements are recommendations in the Operational Excellence pillar? (Select two) -- Make frequent, small, reversible changes, Anticipate failure
+
+An engineering team is new to the AWS Cloud and it would like to launch a dev/test environment with low monthly pricing. Which AWS service can address this use case? -- Amazon LightSail
+
+A media company wants to enable customized content suggestions for the users of its movie streaming platform. Which AWS service can provide these personalized recommendations based on historic data? -- Amazon Personalize
+
+What is the primary use case for Amazon GuardDuty? -- Detecting malicious activity and threats in your AWS accounts and workloads
+
+A start-up would like to quickly deploy a popular technology on AWS. As a Cloud Practitioner, which AWS tool would you use for this task? -- AWS Partner Solutions (formerly Quick Starts)
+
+A Cloud Practitioner would like to centrally view, manage, and operate nodes to quickly identify any issues that might impact applications using those resources. Which AWS service can help with this task? -- AWS Systems Manager
+
+A company would like to audit requests made to an Amazon Simple Storage Service (Amazon S3) bucket. As a Cloud Practitioner, which Amazon Simple Storage Service (Amazon S3) feature would you recommend addressing this use-case? -- Amazon Simple Storage Service (Amazon S3) Access Logs
+
+Which of the following services are provided by Amazon Route 53? (Select Two) -- Domain registration, Health checks and monitoring
+
+An enterprise is planning to move one of its older applications from its local data center to AWS. The IT team wants the fastest migration path and has decided not to update the application code or make any architectural changes. Which migration strategy is the most appropriate for this scenario?  -- Rehost
+
+Which AWS service allows you to quickly and easily add user sign-up, sign-in, and access control to web and mobile applications? -- Amazon Cognito
+
+A company would like to reserve Amazon Elastic Compute Cloud (Amazon EC2) compute capacity for three years to reduce costs. The company also plans to increase their workloads during this period. As a Cloud Practitioner, which Amazon Elastic Compute Cloud (Amazon EC2) reserved instance (RI) type would you recommend? -- Convertible reserved instance (RI)
+
+Which of the following AWS Identity and Access Management (AWS IAM) Security Tools allows you to review permissions granted to an IAM user? -- AWS Identity and Access Management (IAM) access advisor
+
+Which of the following AWS Identity and Access Management (AWS IAM) Security Tools allows you to review permissions granted to an IAM user? -- AWS Identity and Access Management (IAM) access advisor
+
+Which types of monitoring can be provided by Amazon CloudWatch? (Select TWO) -- Resource utilization, Application performance
+
+Which of the following criteria are used to calculate the charge for Amazon EBS Volumes? (Select Two) -- Volume type, Provisioned IOPS
+
+According to the AWS Shared Responsibility Model, which of the following is the responsibility of the customer? -- Firewall & networking configuration of Amazon Elastic Compute Cloud (Amazon EC2)
+
+Which AWS service can be used to subscribe to an RSS feed to be notified of the status of all AWS service interruptions?-- AWS Health Dashboard - Service Health
+
+The IT infrastructure at a university is deployed on AWS Cloud and it's experiencing a read-intensive workload. As a Cloud Practitioner, which AWS service would you use to take the load off databases? -- Amazon ElastiCache
+
+Which AWS tool/service will help you define your cloud infrastructure using popular programming languages such as Python and JavaScript? -- AWS Cloud Development Kit (AWS CDK)
+
+A company is planning to implement Chaos Engineering to expose any blind spots that can disrupt the resiliency of the application. Which AWS service will help implement this requirement with the least effort? -- AWS Fault Injection Simulator (AWS FIS)
+
+Which of the following AWS Support plans is the MOST cost-effective when getting enhanced technical support by Cloud Support Engineers? -- AWS Business Support
+
+A production company would like to establish an AWS managed virtual private network (VPN) service between its on-premises network and AWS. Which item needs to be set up on the company's side? -- A customer gateway
+
+A corporation would like to simplify access management to multiple AWS accounts as well as facilitate AWS Single Sign-On (AWS SSO) access to its AWS accounts. As a Cloud Practitioner, which AWS service would you use for this task? -- AWS IAM Identity Center
+
+A company needs to keep sensitive data in its own data center due to compliance but would still like to deploy resources using AWS. Which Cloud deployment model does this refer to? -- Hybrid Cloud
+
+Which of the following AWS services can be used to generate, use, and manage encryption keys on the AWS Cloud? -- AWS CloudHSM

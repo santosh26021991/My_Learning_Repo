@@ -1,0 +1,86 @@
+GRFANA:
+
+Is open source monitoring and visualization tool, used for observability.
+Dashboard
+Data visulization
+Alerting
+Data source integration: Prometheus, InfluxDB, Elasticsearch, MySQL
+
+Infrastructure monitoring
+Application perfomance monitoring
+Log Analysis
+Business Analytics
+
+It works like::
+
+Data source -- Prometheus collects server metrics
+Grafana Queries the data
+Visualization
+Alerts
+
+Main components of Grafana:
+Dashboards
+Panels
+Data sources
+QueriesAlerts
+Variables/Templates
+User & Organizations
+
+-- Dashboard is a collection of visualization panel that shows cpu usage, memory, disk usage, networks..
+
+-- Panels in Grafana are Graph, Table, Gauge, stat, Heatmap, pie chart, bar chart
+
+-- Data sources are external system from which Grafana retrives the data -- Prometheus, AWS Cloudwatch, Elastic search, MYSQL, PostgreSQL, Loki
+
+-- Exporters in Prometheus : Node exporter : Linux metrics, Blackbox Exporter: Endpoint monitoring, MYSQL Exporter : DB Metrics
+
+-- Grafana Loki: Is a log aggregation management system developed by Grafana Labs used for centralized log management.
+
+-- Variables in Grafana : Select server from drop down : DEV/UAT/PROD
+
+-- Alerting in Grafana : it generates alerts when condition satisfies - CPU > 90%, Disk space crossed > 90%  -- Email, Pager duty
+
+-- Prom QL : Prometheus Query Language
+
+-- Grafana Dashboard is slow : may be heavy promql queries, large time ranges, too many panels, slow backend database
+
+-- Check prometheous targets : http://localhost:9090/targets
+
+-- start grafana: systemctl start grafana-server
+
+-- Enable grafana at boot: systemctl enable grafana-server
+
+-- Default grafana port : 3000 (admin/admin), config file: grafana.ini, Log tool in grafan stack is Loki.
+
+-- Components of Prometheus : Prometheus Server, Exporters, Alertmanager, pushgateway, promql, service discovery
+
+-- Metrics in Prometheus : numerical measurements collected over time.
+
+-- Prometheus scraping: Periodically collecting metrics from targets through HHTP end points such as /metrics.
+
+-- Node exporter collects hardware and OS-level metrics from Linux servers.
+
+-- Prometheus stores data locall in a TSDB (Time series database) : WAL(Write Ahead log), Chunks, Indexes
+
+-- Ports
+
+Prometheus: 9090
+Node Exporter: 9100
+Alertmanager: 9093
+Pushgateway: 9091
+Grafana: 3000
+Elasticsearch: 9200
+Kibana: 5601
+Logstash: 5044
+Filebeat: Uses Logstash port
+
+systemctl start prometheus
+systemctl status prometheus
+
+metrics endpoint: /metrics
+
+Loki is lightweight, cost-efficient, kubernetes friendly
+
+-- KIbana is also similar to Grafana, for visualization, logs and dashboard.
+
+ELK vs Loki (Loki is cost effiecent and light weight, faster, kubernetes focused)
